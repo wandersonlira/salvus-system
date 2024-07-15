@@ -10,20 +10,21 @@ const CONEXAO = mysql.createConnection({
 
 CONEXAO.connect((erro) => {
     if(erro) {
-        console.log("{\n <<OPS!! Houve um erro>> \n" +
-                '"status": 500, \n"message": "Internal Server Error"\n}');
+        console.log("{\n <<OPS!! Houve um erro>> \n");
     } else {
         console.log("Conexão realizada com sucesso!");
     }
 });
 
-export const getConsulta = (sql, valores='') => {
+export const getConsulta = (sql, valores=[]) => {
     return new Promise((resolvida, rejeitada) => {
         CONEXAO.query(sql, valores, (erro, resultado) =>{
-            if (erro) return rejeitada('{\n <<OPS!! Houve um erro>> \n' +
-                '"status": 500, \n"message": "Internal Server Error"\n}');
-            const tuplaResultante = JSON.parse(JSON.stringify(resultado));
-            return resolvida(tuplaResultante)
+            try {
+                const tuplaResultante = JSON.parse(JSON.stringify(resultado));
+                return resolvida(tuplaResultante);
+            } catch (error) {
+                return rejeitada(erro);
+                }
         });
     });
 }
