@@ -2,43 +2,34 @@ import { getConsulta } from "../models/database/conexao.js";
 
 class ProdutoRepository {
 
-    async create(requisicao, resposta) {
-        const {nome, descricao, preco, data_criacao} = requisicao.body;
+    create({nome, descricao, preco, data_criacao}) {
         const sql = 'INSERT INTO produtos (nome, descricao, preco, data_criacao) '
             + 'VALUES (?, ?, ?, ?)';
-        const resultadoConsulta = await getConsulta(sql, [nome, descricao, preco, data_criacao]);
-        resposta.status(201).json(resultadoConsulta);
+        return getConsulta(sql, [nome, descricao, preco, data_criacao]);
     }
 
-    async findAll(requisicao, resposta) {
+    findAll() {
         const sql = 'SELECT * FROM produtos';
-        const resultadoConsulta = await getConsulta(sql);
-        resposta.status(200).json(resultadoConsulta);
+        return getConsulta(sql);
     }
 
-    async findById(requisicao, resposta) {
-        const produtoIndex = requisicao.params.id;
+    findById(produtoId) {
         const sql = 'SELECT * FROM produtos WHERE id = ?';
-        const resultadoConsulta = await getConsulta(sql, produtoIndex);
-        resposta.status(200).json(resultadoConsulta);
+        return getConsulta(sql, produtoId);
     }
 
-    async update(requisicao, resposta) {
-        const produtoIndex = requisicao.params.id;
-        const {nome, descricao, preco, data_criacao} = requisicao.body;
+    update({nome, descricao, preco, data_criacao, produtoIndex}) {
         const sql = 'UPDATE produtos SET nome = ?, descricao = ?, ' 
             + 'preco = ?, data_criacao = ? WHERE id = ?';
-        const resultadoConsulta = await getConsulta(sql, [nome, descricao, preco, 
+        return getConsulta(sql, [nome, descricao, preco, 
             data_criacao, produtoIndex]);
-        resposta.status(200).json(resultadoConsulta);
     }
 
-    async delete(requisicao, resposta) {
-        const produtoIndex = requisicao.params.id;
+    async delete(produtoIndex) {
         const sql = 'DELETE FROM produtos WHERE id = ?';
-        const resultadoConsulta = await getConsulta(sql, produtoIndex);
-        resposta.json(resultadoConsulta);
+        return getConsulta(sql, produtoIndex);
     }
+
 }
 
 export default new ProdutoRepository();
