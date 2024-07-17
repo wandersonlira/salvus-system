@@ -31,9 +31,9 @@ export function formataDataDtoView(data = Date) {
     return dataFormatado;
 }
 
-export function validaDadosBody(nome = String, descricao = String, preco = Number) {
-    if(typeof nome === 'string' && typeof descricao === 'string' && Number.isInteger(preco)) {
-        const dadosValidados = [nome, descricao, preco];
+export function validaDadosBody(nome = String, descricao = String) {
+    if(typeof nome === 'string' && typeof descricao === 'string') {
+        const dadosValidados = [nome, descricao];
         return dadosValidados;
     } else {
         throw new Error('erro: dados informados encontram-se incorretos!');
