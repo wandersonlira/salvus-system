@@ -1,11 +1,13 @@
-export default class ProdutoDTO {
+import moment from "moment-timezone";
+import { validaDadosBody } from "../utils/funcoesUtils.js";
 
-    data_criacao = new Date();
+export default class ProdutoDTO {
     
-    constructor(nome, descricao, preco) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.data_criacao = this.data_criacao
+    constructor(nome = String, descricao = String, preco = Number) {
+        const validaDados = validaDadosBody(nome, descricao, preco);
+        this.nome = validaDados[0];
+        this.descricao = validaDados[1];
+        this.preco = validaDados[2];
+        this.data_criacao = moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss');
     }
 }

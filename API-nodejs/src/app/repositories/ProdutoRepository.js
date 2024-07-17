@@ -18,11 +18,10 @@ class ProdutoRepository {
         return getConsulta(sql, produtoId);
     }
 
-    update(nome, descricao, preco, data_criacao, produtoIndex) {
+    update(nome, descricao, preco, produtoIndex) {
         const sql = 'UPDATE produtos SET nome = ?, descricao = ?, ' 
-            + 'preco = ?, data_criacao = ? WHERE id = ?';
-        return getConsulta(sql, [nome, descricao, preco, 
-            data_criacao, produtoIndex]);
+            + 'preco = ? WHERE id = ?';
+        return getConsulta(sql, [nome, descricao, preco, produtoIndex]);
     }
 
     async delete(produtoIndex) {

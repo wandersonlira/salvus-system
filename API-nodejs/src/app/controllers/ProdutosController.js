@@ -1,25 +1,25 @@
 import ProdutoRepository from "../repositories/ProdutoRepository.js";
 import ProdutoDTOView from "../dto/ProdutoDTOView.js";
 import ProdutoDTO from "../dto/ProdutoDTO.js";
-import { produtoCriadoJson, produtoAtualizadoJson } from "../utils/funcoesUtils.js";
+import { produtoCriadoJson, produtoAtualizadoJson, posicaoIndice } from "../utils/funcoesUtils.js";
 
 class ProdutoController {
 
     async index(requisicao, resposta) {
         try {
             const resultadoConsulta = await ProdutoRepository.findAll();
-            let produtoDtoView = [];
+            let listaProdutoDtoView = [];
             for (let indice = 0; indice < resultadoConsulta.length; indice++) {
-                const dtoView = new ProdutoDTOView(
+                const produtoDtoView = new ProdutoDTOView(
                     resultadoConsulta[indice].id, resultadoConsulta[indice].nome, resultadoConsulta[indice].descricao, 
                     resultadoConsulta[indice].preco, resultadoConsulta[indice].data_criacao
                 );
-                produtoDtoView.push(dtoView);
+                listaProdutoDtoView.push(produtoDtoView);
             }
-            resposta.status(200).json(produtoDtoView);  
+            resposta.status(200).json(listaProdutoDtoView);  
 
         } catch (error) {
-            resposta.status(500).json({ error: error.message });
+            resposta.status(404).json({ error: error.message });
         }     
     }
 
@@ -27,9 +27,11 @@ class ProdutoController {
         try {
             const produtoId = requisicao.params.id;
             const resultadoConsulta = await ProdutoRepository.findById(produtoId);
+            const indexProduto = posicaoIndice(resultadoConsulta);
             const produtoDtoView = new ProdutoDTOView(
-                resultadoConsulta[0].nome, resultadoConsulta[0].descricao, 
-                resultadoConsulta[0].preco, resultadoConsulta[0].data_criacao);
+                resultadoConsulta[indexProduto].id, resultadoConsulta[indexProduto].nome, 
+                resultadoConsulta[indexProduto].descricao, resultadoConsulta[indexProduto].preco, 
+                resultadoConsulta[indexProduto].data_criacao);
             resposta.status(200).json(produtoDtoView);
 
         } catch (error) {
@@ -56,15 +58,14 @@ class ProdutoController {
             const produtoIndex = requisicao.params.id;
             const verificaId = await ProdutoRepository.findById(produtoIndex);
             if (verificaId.length === 0) return resposta.status(404).json("Id não encontrado!");
-            const produtoDto = new ProdutoDTO(
-                requisicao.body.nome, requisicao.body.descricao, 
-                requisicao.body.preco,requisicao.body.data_criacao
+            const produtoDto = new ProdutoDTO(requisicao.body.nome, requisicao.body.descricao, 
+                requisicao.body.preco
             );
             const resultadoConsulta = await ProdutoRepository.update(produtoDto.nome, 
-                produtoDto.descricao, produtoDto.preco, produtoDto.data_criacao, produtoIndex);
+                produtoDto.descricao, produtoDto.preco, produtoIndex);
             resposta.status(200).send(produtoAtualizadoJson(resultadoConsulta, produtoDto));
         } catch (error) {
-            resposta.status(500).json({error: error.message});
+            resposta.status(404).json({error: error.message});
         }
     }
 
