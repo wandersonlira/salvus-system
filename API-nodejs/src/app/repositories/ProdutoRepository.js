@@ -2,7 +2,7 @@ import { getConsulta } from "../models/database/conexao.js";
 
 class ProdutoRepository {
 
-    create({nome, descricao, preco, data_criacao}) {
+    create(nome, descricao, preco, data_criacao) {
         const sql = 'INSERT INTO produtos (nome, descricao, preco, data_criacao) '
             + 'VALUES (?, ?, ?, ?)';
         return getConsulta(sql, [nome, descricao, preco, data_criacao]);
@@ -18,7 +18,7 @@ class ProdutoRepository {
         return getConsulta(sql, produtoId);
     }
 
-    update({nome, descricao, preco, data_criacao, produtoIndex}) {
+    update(nome, descricao, preco, data_criacao, produtoIndex) {
         const sql = 'UPDATE produtos SET nome = ?, descricao = ?, ' 
             + 'preco = ?, data_criacao = ? WHERE id = ?';
         return getConsulta(sql, [nome, descricao, preco, 
