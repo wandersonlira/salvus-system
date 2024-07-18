@@ -31,10 +31,12 @@ export function formataDataDtoView(data = Date) {
     return dataFormatado;
 }
 
-export function validaDadosBody(nome = String, descricao = String) {
-    if(typeof nome === 'string' && typeof descricao === 'string') {
-        const dadosValidados = [nome, descricao];
-        return dadosValidados;
+export function validaDadosBody(nome = String, descricao = String, preco) {
+    if(typeof nome === 'string' && typeof descricao === 'string' && !isNaN(preco)) {
+        if (parseFloat(preco)) {
+            const dadosValidados = [nome, descricao, preco];
+            return dadosValidados;
+        }
     } else {
         throw new Error('erro: dados informados encontram-se incorretos!');
     }
