@@ -1,16 +1,9 @@
-import mysql from 'mysql';
 
-const CONEXAO = mysql.createConnection({
-    host: 'localhost',
-    port: '3306',
-    user: 'root',
-    password: '',
-    database: 'db_produtos'
-});
+import {CONEXAO} from '../../config/databaseConfig.js';
 
 CONEXAO.connect((erro) => {
     if(erro) {
-        console.log("{\n <<OPS!! Houve um erro>> \n");
+        console.log("{\n <<OPS!! Houve um erro>> \n", erro);
     } else {
         console.log("Conexão realizada com sucesso!");
     }
@@ -29,4 +22,3 @@ export const getConsulta = (sql, valores=[]) => {
     });
 }
 
-export default CONEXAO;
