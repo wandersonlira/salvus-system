@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import { TZ_PT_BR, TZ_FORMAT } from '../config/tzConfig.js';
 
 export function produtoCriadoJson(resultadoConsulta, produtoDto) {
     const mensagem = 'Produto cadastrado com sucesso!';
@@ -26,9 +27,7 @@ export function produtoAtualizadoJson(resultadoConsulta, produtoDto) {
 }
 
 export function formataDataDtoView(data = Date) {
-    const dataCriacao = new Date(data);
-    const dataFormatado = moment(dataCriacao).tz('America/Sao_Paulo').format('DD/MM/YYYYTHH:mm:ss');
-    return dataFormatado;
+    return moment(data).tz(TZ_PT_BR).format(TZ_FORMAT);
 }
 
 export function validaDadosBody(nome = String, descricao = String, preco) {
