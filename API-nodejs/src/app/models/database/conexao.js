@@ -1,5 +1,15 @@
+import mysql2 from 'mysql2';
+import dbConfig from '../../config/dbConfig.js';
 
-import {CONEXAO} from '../../config/databaseConfig.js';
+const db = dbConfig.production;
+
+export const CONEXAO = mysql2.createConnection({
+    host:  db.host,
+    port: db.port,
+    user: db.user,
+    password: db.password,
+    database: db.database
+});
 
 CONEXAO.connect((erro) => {
     if(erro) {
