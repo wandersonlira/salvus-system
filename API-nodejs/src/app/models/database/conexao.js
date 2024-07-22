@@ -1,4 +1,3 @@
-
 import mysql2 from 'mysql2';
 import dbConfig from '../../config/dbConfig.js';
 
