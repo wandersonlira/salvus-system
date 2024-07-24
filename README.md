@@ -12,19 +12,45 @@ Este repositório consiste no desenvolvimento de uma aplicação fullstack utili
 > ## 💻 Pré-requisitos
 >
 > ### Backend:
-> - Você deve ter instalado:
->    - `<Node.js v18.20.4 | npm 10.7.0>`
->    - `<XAMPP v8.2.12>`
 > - Depencências instaladas: 
 >   - `"express": "^4.19.2"`,
+>   - `"dotenv": "^16.4.5"`,
 >   - `"moment": "^2.30.1"`,
 >   - `"moment-timezone": "^0.5.45"`,
->   - `"mysql": "^2.18.1"`,
->   `"nodemon": "^3.1.4"`
+>   - `"mysql2": "^3.10.3"`,
+>   - `"nodemon": "^3.1.4"`
 > - Script padrão:
 >   - `"dev": "nodemon server.js"`
 
-### 🔧 Instalação
+## 🔄 Rodando a API
+
+### 🔗 URL pública pelo navegador: 
+> #### *Você pode testar os endpoint no próprio navegador seguindo as rotas:* 
+>  - GET `https://salvus-system.onrender.com/api/produtos`
+>  - GET `https://salvus-system.onrender.com/api/produtos/id`
+>  - POST`https://salvus-system.onrender.com/api/produtos`
+>    ```
+>    {
+>    "nome": "NOME DO PRODUTO",
+>    "descricao": "DESCRIÇÃO SOBRE O PRODUTO",
+>    "preco": VALOR
+>    }
+>    ```
+>  - PUT `https://salvus-system.onrender.com/api/produtos/id`
+>    ```
+>    {
+>    "nome": "NOVO PRODUTO",
+>    "descricao": "DESCRIÇÃO SOBRE O PRODUTO",
+>    "preco": VALOR
+>    }
+>    ```
+>  - DELETE `https://salvus-system.onrender.com/api/produtos/id`
+
+### 🔧 Instalação para ambiente local
+
+> #### Você deve ter instalado:
+>    - `<Node.js v18.20.4 | npm 10.7.0>`
+>    - `<XAMPP v8.2.12>`
 
 #### 1. Após instalado `<Node.js v18.20.4 | npm 10.7.0>` e `<XAMPP v8.2.12>` clone este projeto para seu diretório local.
 
@@ -36,20 +62,30 @@ cd seuDiretório/
 git clone https://github.com/wandersonlira/salvus-system.git
 
 ```
-#### 2. Configure o parâmetro de conexão com seu banco de dados.
+#### 2. Exclua a pasta ***node_modules/***.
 
 ```bash
-# no caminho API-nodejs/src/app/models/database/conexao.js" mude os parâmetros para seua conexão
+# na raiz do projeto execute o comando abaixo para instalar exatamente as versões de pacotes especificadas no package-lock.json
+npm ci
+```
 
-const CONEXAO = mysql.createConnection({
-    host: 'SEU_LOCALHOST',
-    port: 'SUA_PORTA',
-    user: 'SEU_USUÁRIO',
-    password: 'SEU_PASSWORD',
-    database: 'NOME_DO_SEU_BANCO'
+#### 3. Configure o parâmetro de conexão com seu banco de dados.
+
+```bash
+# no caminho "API-nodejs/src/app/models/database/conexao.js" mude os parâmetros para seua conexão.
+# no caminho "API-nodejs/src/app/config/dbConfig.js" você confere diferentes ambientes.
+
+const db = dbConfig.production;
+
+export const CONEXAO = mysql2.createConnection({
+    host:  db.host,
+    port: db.port,
+    user: db.user,
+    password: db.password,
+    database: db.database
 });
 ```
-### 🔄 Rodando o projeto
+### ⚙️ Rodando no ambiente local
 
 #### Abra o editor de código de sua preferência e siga os seguintes passos no bash:
 
@@ -81,24 +117,24 @@ Conexão realizada com sucesso!
 Esta API construida em node.js considera o princípio SOLID para organização de código considerando que cada módulo ou classe deve ter uma única responsabilidade e que classe derivada possa ser usada sem que o comportamento da aplicação seja afetado, estruturas de pastas possam ser organizadas de modo que novas funcionalidades possam ser adicionadas sem modificar o código existente e que estruturas de pastas podem facilitar a injeção de dependências e a separação entre abstrações e implementações.
 
 ## Escopo
-Uma alicação fullstack que fornece uma api de catálogo de produtos em node.js onde seráconsumida poruma aplicação desenvolvida em react.js. 
+Uma aplicação fullstack que fornece uma api de catálogo de produtos em node.js onde será consumida por uma aplicação desenvolvida em react.js. 
 
 
 ## Requisitos funcionais
 - [X] Permitir CRUD (Create, Read, Update, Delete).
 - [x] Cada produto deve ter os seguintes campos: id, nome, descrição, preço e data de criação.
 - [x] Cadastradar data automaticamente no ato da criação do produto.
-- [x] Exibir data em formato local brasileiro baseado no padrão ISO 8601.
-- [x] Criar DTOS para transferência dos dados.
-- [x] Use o Express para criar as rotas.
-- [x] Utilize um banco de dados (Mysql) para armazenar os dados.
-- [x] Implemente validação de dados na criação e atualização de produtos.
-- [x] Adicione tratamento de erros adequados.
+- [x] Exibir data em formato local brasileiro baseado "-03:00" no padrão ISO 8601.
+- [x] Criar DTOs para transferência dos dados.
+- [x] Usar o Express para criar as rotas.
+- [x] Utilizar um banco de dados (Mysql) para armazenar os dados.
+- [x] Implementar validação de dados na criação e atualização de produtos.
+- [x] Adicionar tratamento de erros adequados.
 
 ## Requisitos de interface
 > 1. **`/src/app/controllers/ProdutoController.js`:** Esta class estabelece uma camada de abstração entre as requisições feitas ao banco de dados e a resposta desses dados. Além disso, as requisições devem ser solicitadas pelo endpoint:
 >
-> - POST **`http://localhost:5000/api/produtos`:** No corpo será pedido apenas 'nome', 'descrição' e 'preço' pois a 'data_criacao' será pego automaticamente no ato da criação pelo objeto 'date' e 'moment-timezone' estabelecendo fusu horário brasileiro.
+> - POST **`http://localhost:5000/api/produtos`:** No corpo será pedido apenas 'nome', 'descrição' e 'preço' pois a 'data_criacao' será pego automaticamente no ato da criação pelo objeto 'date' e 'moment-timezone' estabelecendo fuso horário brasileiro (-03:00).
 > - GET* **`http://localhost:5000/api/produtos`:** Lista todos os produtos cadastrados.
 > - GET **`http://localhost:5000/api/produtos/id`:**Buscar produtos baseado no id.
 > - PUT **`http://localhost:5000/api/produtos`:** Atualização acontece baseado no id onde no corpo será passado apenas 'nome', 'descrição' e 'preço' pois não será permitido alterar a data.
@@ -124,20 +160,24 @@ Uma alicação fullstack que fornece uma api de catálogo de produtos em node.js
  - [Issue - #7 - Criado class ProdutoController responsável pela camada controllers](https://github.com/wandersonlira/salvus-system/issues/7)
  - [Issue - #8 - Criado DTOs para transferência de dados e package 'utils' com funções reutilizáveis.](https://github.com/wandersonlira/salvus-system/issues/8)
  - [Issue - #9 - Criado formatações para data e validação de dados no corpo do body](https://github.com/wandersonlira/salvus-system/issues/9)
+ - [Issue - #10 - Atualizado documentação da API](https://github.com/wandersonlira/salvus-system/issues/10)
+ - [Issue - #11 - Melhorar organização de código para torna-lo mais coeso](https://github.com/wandersonlira/salvus-system/issues/11)
+ - [Issue - #12 - Correções no texto do README.md](https://github.com/wandersonlira/salvus-system/issues/12)
 
 ## Aplicação em execução
 ### Estrutura de pastas
-![estrutura de pasta do projeto](https://github.com/user-attachments/assets/68f54600-8f52-4a70-a8ea-b67de2d926b0)
+![estrutura de pasta do projeto](https://github.com/user-attachments/assets/8309413f-9a62-46b0-83e2-75d73093a17f)
 ### Index produtos
-![index](https://github.com/user-attachments/assets/4f933fb6-f5b9-47c2-bf78-40fbf5409e23)
+![findAll](https://github.com/user-attachments/assets/64fe4c71-dcf7-4593-ab70-d387affdfd6c)
 ### Show produtos
-![show](https://github.com/user-attachments/assets/92bd7168-49e8-490d-a1e5-3e0fce6850f1)
+![findBy](https://github.com/user-attachments/assets/eea049f3-4253-41c5-8ffa-f102ce02b5a2)
 ### Store produto
-![store](https://github.com/user-attachments/assets/47099707-1272-4a60-adfc-744c38978f12)
+![save](https://github.com/user-attachments/assets/47be4d17-a513-4c1c-bcb7-da619879ae42)
 ### Update produto
-![update](https://github.com/user-attachments/assets/dc909d1d-2b97-47ca-848a-f0d2ea0e7554)
+![update](https://github.com/user-attachments/assets/4d2e03da-b54e-4125-9e8f-d319cb2933f8)
 ### Delete produto
-![delete](https://github.com/user-attachments/assets/5c07cbe1-23c7-4697-bbf6-f09c966f0e39)
+![delete](https://github.com/user-attachments/assets/682c9758-d100-4024-863c-0ee8edb4379e)
 
-## 📌 Versão
- *"version": "1.0.0"*
+## 📌 Nota de versão 
+### versão 1.0.0
+
