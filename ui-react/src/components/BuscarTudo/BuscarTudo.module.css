@@ -1,0 +1,120 @@
+.table {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 5px #ccc;
+    border-radius: 5px;
+    max-width: 1400px;
+    margin: 20px auto;
+    word-break: break-all;
+  }
+
+  .th {
+    text-align: left;
+    border-bottom: inset;
+    padding-bottom: 5px;
+  }
+
+  .td {
+    padding-top: 15px;
+    text-align: left;
+    width: auto;
+    background: #09ee6109;
+    border-bottom: inset;
+  }
+
+  /* -------------- ATUALIZA ---------------------------- */
+
+  ::after,
+::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.form_box {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffffec;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 700px;
+}
+
+.form_box .title {
+    padding: 24px 32px;
+    font-size: 24px;
+    border-bottom: thin solid #cccccc93;
+}
+
+.form_box form {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    padding: 32px;
+}
+
+.form_box input, .form_box textarea {
+    width: calc(47% - 8px);
+    height: 48px;
+    border-radius: 8px;
+    border: thin solid #99999979;
+    padding-left: 16px;
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.form_box input:first-child {
+    margin-right: 14px;
+}
+
+.form_box textarea[name=descricao] {
+    width: 95%;
+    height: 150px;
+    padding: 16px;
+}
+
+.form_box button {
+    display: block;
+    border: none;
+    outline: none;
+    width: 180px;
+    height: 48px;
+    margin-right: 16px;
+    border-radius: 8px;
+    background-color: #1f924b;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form_box button:hover {
+    background-color: #0e642f;
+}
+
+.form_box .buttonCancelar {
+  display: block;
+  border: none;
+  outline: none;
+  width: 180px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: #a5a5a5;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form_box .buttonCancelar:hover {
+  background-color: #646464;
+}
