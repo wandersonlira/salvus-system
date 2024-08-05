@@ -13,6 +13,7 @@ Este repositório consiste no desenvolvimento de uma aplicação fullstack utili
 >
 > ### Backend:
 > - Depencências instaladas: 
+>   -  "cors": "^2.8.5",
 >   - `"express": "^4.19.2"`,
 >   - `"dotenv": "^16.4.5"`,
 >   - `"moment": "^2.30.1"`,
@@ -21,6 +22,25 @@ Este repositório consiste no desenvolvimento de uma aplicação fullstack utili
 >   - `"nodemon": "^3.1.4"`
 > - Script padrão:
 >   - `"dev": "nodemon server.js"`
+>
+> ### Frontend:
+> - Depencências instaladas: 
+>   - "axios": "^1.7.3",
+>   - "react": "^18.3.1",
+>   - "react-dom": "^18.3.1",
+>   - "react-icons": "^5.2.1",
+>   - "react-router-dom": "^6.26.0",
+>   - "react-scripts": "5.0.1",
+>   - "react-toastify": "^10.0.5",
+>   - "web-vitals": "^2.1.4"
+> - Script padrão:
+>   - `"start": "react-scripts start",
+
+## 🔄 Rodando a aplicação
+> #### Esta aplicação encontra-se em deploy no domínio `https://salvus-system.vercel.app/`
+> ⚠️ Atenção: por questões de recurso em servidores gratuitos esta aplicação funcionará em horário comercial podendo haver latência na consulta dos dados. 
+> 
+![tela](https://github.com/user-attachments/assets/4e4ec6bc-e52c-416b-ac2a-c203b7c3416c)
 
 ## 🔄 Rodando a API
 
@@ -163,6 +183,9 @@ Uma aplicação fullstack que fornece uma api de catálogo de produtos em node.j
  - [Issue - #10 - Atualizado documentação da API](https://github.com/wandersonlira/salvus-system/issues/10)
  - [Issue - #11 - Melhorar organização de código para torna-lo mais coeso](https://github.com/wandersonlira/salvus-system/issues/11)
  - [Issue - #12 - Correções no texto do README.md](https://github.com/wandersonlira/salvus-system/issues/12)
+ - [Issue - #15 - Criar interface para comunicação com API](https://github.com/wandersonlira/salvus-system/issues/15)
+ - [Issue - #16 - Criar telas Cadastrar, Buscar tudo e buscar por id](https://github.com/wandersonlira/salvus-system/issues/16)
+ - [Issue - #17 - Configuração de Cors para rota em depoly](https://github.com/wandersonlira/salvus-system/issues/17)
 
 ## Aplicação em execução
 ### Estrutura de pastas
